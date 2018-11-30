@@ -1,0 +1,20 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:f="/lib/form">
+
+	<tr>
+		<td colspan="5" style="padding-left: 50px;">
+			<f:entry title="Easy Webhook Key" field="easyWebHookKey">
+		        <f:textbox />
+		    </f:entry>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="5" style="padding-left: 50px;">
+			<f:entry title="Json path expressions for others git providers" field="customGitProviderWebhookJsonParameters">
+		        <f:textarea />
+		    </f:entry>
+		</td>
+	</tr>	
+
+</j:jelly>
