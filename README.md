@@ -6,7 +6,7 @@ Plugin that can receive any HTTP post request, parse the json body, extract valu
 
 # How it works?
 
-This plugin will launch a jenkins job with following parameters:
+When a event is triggered in your git repository manager (bitbucket, github, gitlab) or another platform, a jenkins job will be launched with following parameters:
 
 - webhook parameters 
   - repositoryName
@@ -19,9 +19,8 @@ This plugin will launch a jenkins job with following parameters:
 - http uri parameters
   - gitRepositoryManagementId
   - jobId
-  - any other uri parameters sent to webhook (http://jenkins.com/easy-webhook-plugin_key/var1=value1&var=value2...)
-  
-When a event is triggered in your git repository manager (bitbucket, github, gitlab)
+  - any other uri parameters sent to webhook (http://jenkins.com/easy-webhook-plugin_mykey/var1=value1&var=value2...)
+
 
 # Build plugin from source code
 
@@ -40,9 +39,9 @@ mvn clean package
 
 If no error, you must see a file called **easy-webhook-plugin.hpi** in maven target folder.
   
-# Usage
+# Configuration
 
-- You have 3 options to install this plugin:
+- You have 4 options to install this plugin:
 
   - Install from available plugins in Jenkins configurations (coming soon)
   - Download the last version from github releases : https://github.com/utec/easy-webhook-plugin/releases/
@@ -50,17 +49,18 @@ If no error, you must see a file called **easy-webhook-plugin.hpi** in maven tar
   - Build the .hpi file from source code
   
 - After that , go to Jenkins > Manage Jenkins > Configure System > Configure Easy WebHook Plugin
-- Add the key and save.
+- Add the key and save. This key will be used as identificator and must be added to the webhook url published by Jenkins. 
 
 Thats all. You have a new public endpoint in your jenkins, ready to set as webhook in your git platform provider.
   
   
-# Test
+# Usage & Test
 
 After a success installation of this plugin, you can test it with the following steps:
 
 - Create a jenkins job called **my_awessome_jenkins_job** (for instance).
-- Add some parameters (from How it works? section) to this job. For instance: repositoryName and branchName.
+- Add some parameters to this job with exact the same name of parameters listed in **How it works?** section. For instance: repositoryName and branchName.
+- Also if you need an extra parameter, you can add it but if you want put a value, you must to include in the webhook url as uri or get parameter. For instance, a new param could be **notificationUsers**
 
 ## Using curl
 
@@ -78,15 +78,21 @@ Change **my_jenkins.com** to localhost:8080 (local testing), public ip or public
 - Create some git repository and add the following url as webhook for push events:
 
   `
-http://my_jenkins.com/easy-webhook-plugin_mykey/?gitRepositoryManagementId=bitbucket&jobId=my_awessome_jenkins_job
+http://my_jenkins.com/easy-webhook-plugin_mykey/?gitRepositoryManagementId=bitbucket&jobId=my_awessome_jenkins_job&notificationUsers=jane.doe@blindspot.com
   `
 
 Pay attention to these uri params:
 
-- gitRepositoryManagementId=bitbucket
+- http://my_jenkins.com/easy-webhook-plugin_**mykey**
+  - **mykey** is the previous key configured in Jenkins > Manage Jenkins > Configure System > Configure Easy WebHook Plugin
+- **gitRepositoryManagementId**=bitbucket
   - Used to extract correct values from json webhook payload
-- jobId=my_awessome_jenkins_job
+- **jobId**=my_awessome_jenkins_job
   - Used to determinate the specific job to be launched in jenkins
+- **notificationUsers**
+  -  This is an extra parameter , which will be sent to your **my_awessome_jenkins_job** jenkins job
+
+Finally, just push some change and go to your Jenkins to see the new build in progress :D   
 
 # Get hacks from 
 
