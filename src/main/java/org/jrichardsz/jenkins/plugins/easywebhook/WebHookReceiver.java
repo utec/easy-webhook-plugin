@@ -99,6 +99,9 @@ public class WebHookReceiver implements UnprotectedRootAction {
 
     Enumeration<?> requestParameterNames = req.getParameterNames();
     HashMap<String, String> urlQueryParameters = new HashMap<>();
+    HashMap<String, String> payloadParameter = new HashMap<>();
+
+    payloadParameter.put("payload", webhookPayload);
 
     while (requestParameterNames.hasMoreElements()) {
       String parameterName = (String) requestParameterNames.nextElement();
@@ -130,7 +133,7 @@ public class WebHookReceiver implements UnprotectedRootAction {
             String.format("%s.jsonpath.expression.actorName", gitRepositoryManagementId)));
     variablesToBeExtracted.put("changeNotes", ClassPathProperties.getProperty(
             String.format("%s.jsonpath.expression.eventMessage", gitRepositoryManagementId)));
-
+    
     Map<String, String> parametersFromJsonWebhook = jsonPathEvaluator.execute(webhookPayload,
             variablesToBeExtracted);
 
@@ -159,6 +162,7 @@ public class WebHookReceiver implements UnprotectedRootAction {
     HashMap<String, String> parametersToSendItToJob = new HashMap<>();
     parametersToSendItToJob.putAll(parametersFromJsonWebhook);
     parametersToSendItToJob.putAll(urlQueryParameters);
+    parametersToSendItToJob.putAll(payloadParameter);
     
     LOGGER.log(Level.INFO, "Add constant parameters related to git repository");
     
