@@ -76,5 +76,10 @@ public class JenkinsUtil {
           String finalMessage) throws IOException {
     createStaplerResponseAndFinalize(resp, 500, finalMessage);
   }
+  
+  public static void createBadRequestErrorStaplerResponseAndFinalize(StaplerResponse resp,
+          String finalMessage) throws IOException {
+    createStaplerResponseAndFinalize(resp, 400, finalMessage);
+  }  
 
 }
