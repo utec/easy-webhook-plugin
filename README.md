@@ -2,24 +2,24 @@
 
 ![](https://raw.githubusercontent.com/jrichardsz/static_resources/master/easy-webhook-plugin.png)
 
-Plugin that can receive any HTTP post request, parse the json body, extract values using JSONPath and trigger a jenkins job with those values as job parameters.
+Plugin that can receive HTTP post request from bitbucket , gitlab y github(coming sooon), parse the json body, extract values using JSONPath & groovy and trigger a jenkins job with those values as job parameters.
 
 # How it works?
 
 When a event is triggered in your git repository manager (bitbucket, github, gitlab) or another platform, a jenkins job will be launched with following parameters:
 
-- webhook parameters 
+- webhook parameters
   - repositoryName
   - branchName
-  - changeNotes
-  - actorName
+  - eventMessage
+  - authorId
   - gitCloneUrlHttpsPrefix
   - gitCloneUrlSshPrefix
-  
+
 - http uri parameters
-  - gitRepositoryManagementId
+  - scmId
   - jobId
-  - any other uri parameters sent to webhook (http://jenkins.com/easy-webhook-plugin_mykey/var1=value1&var=value2...)
+  - any other uri parameters sent to webhook (http://jenkins.com/easy-webhook-plugin-mykey/var1=value1&var=value2...)
 
 
 # Build plugin from source code
@@ -34,67 +34,73 @@ When a event is triggered in your git repository manager (bitbucket, github, git
 Execute:
 
 ```
-mvn clean package 
+mvn clean package
 ```
 
 If no error, you must see a file called **easy-webhook-plugin.hpi** in maven target folder.
-  
-# Configuration
 
-- You have 4 options to install this plugin:
+# Plugin installation
 
-  - Install from available plugins in Jenkins configurations (coming soon)
+- You have 4 options to get this plugin:
+
   - Download the last version from github releases : https://github.com/utec/easy-webhook-plugin/releases/
-  - Download the .hpi file from jenkins official page
+  - Download the .hpi file from jenkins official page(coming soon)
   - Build the .hpi file from source code
-  
-- After that , go to Jenkins > Manage Jenkins > Configure System > Configure Easy WebHook Plugin
-- Add the key and save. This key will be used as identificator and must be added to the webhook url published by Jenkins. 
 
-Thats all. You have a new public endpoint in your jenkins, ready to set as webhook in your git platform provider.
-  
-  
+- After that , go to Jenkins > Manage Jenkins > Configure System > Configure Easy WebHook Plugin
+- Add the **secret key** and save. This key will be used as identifier and must be added to the webhook url published by Jenkins. This value help to hide your **public webhook url**
+
+That's all. You have a new public endpoint in your jenkins, ready to set as webhook in your git platform provider.
+
+
 # Usage & Test
 
 After a success installation of this plugin, you can test it with the following steps:
 
-- Create a jenkins job called **my_awessome_jenkins_job** (for instance).
-- Add some parameters to this job with exact the same name of parameters listed in **How it works?** section. For instance: repositoryName and branchName.
-- Also if you need an extra parameter, you can add it but if you want put a value, you must to include in the webhook url as uri or get parameter. For instance, a new param could be **notificationUsers**
+- Create a jenkins job (e.g my_awessome_jenkins_job). Pipeline job is recommended.
 
 ## Using curl
 
-- In order to trigger this job, using curl, you must to perform an http post request with a json body.
+In order to test this plugin which must launch an existent jenkins job, web can use curl.
+
+These values are required
+
+| Parameter        | Description  | Example  |
+|:------------- |:-----|:----
+| jenkins host      | ip or public domain |  my_jenkins.com or localhost:8080
+| /tmp/gitlab_webhook.json     | File with webhook json sample |Here some [samples](https://jrichardsz.github.io/devops/configure-webhooks-in-github-bitbucket-gitlab)
+| secret key      | (Created in Jenkins > Manage Jenkins > Configure System > Configure Easy WebHook Plugin) | 123456789
+| scmId      | one of the well known scm | gitlab, bitbucket or github(coming soon)
+| jobId      | name of any existent jenkins job | hello_word_job
+
+With the previous values, you can exec this line:
 
 ```
-curl -v -X POST "http://my_jenkins.com/easy-webhook-plugin_mykey/?gitRepositoryManagementId=bitbucket&jobId=my_awessome_jenkins_job" -d @webhook_bitbucket_payload.json \
---header "Content-Type: application/json"
+curl -d @/tmp/gitlab_webhook.json \
+-H "Content-Type: application/json" \
+-X POST "http://my_jenkins.com/easy-webhook-plugin-123456789/?scmId=gitlab&jobId=hello_word_job"
 ```
 
-Change **my_jenkins.com** to localhost:8080 (local testing), public ip or public domain.
+If you go to your jenkins home, you must see a new build execution in your **hello_word_job** job
 
 # Using Bitbucket, Github or Gitlab
 
-- Create some git repository and add the following url as webhook for push events:
+Create some git repository and add the following url as webhook for **push** events. Check this [post](https://jrichardsz.github.io/devops/configure-webhooks-in-github-bitbucket-gitlab) to get a detailed guide.
+
+The url to register will be something like this:
 
   `
-http://my_jenkins.com/easy-webhook-plugin_mykey/?gitRepositoryManagementId=bitbucket&jobId=my_awessome_jenkins_job&notificationUsers=jane.doe@blindspot.com
+http://my_jenkins.com/easy-webhook-plugin-123456789/?scmId=gitlab&jobId=hello_word_job
   `
+Or add new parameters like **notificationUsers**
 
-Pay attention to these uri params:
-
-- http://my_jenkins.com/easy-webhook-plugin_**mykey**
-  - **mykey** is the previous key configured in Jenkins > Manage Jenkins > Configure System > Configure Easy WebHook Plugin
-- **gitRepositoryManagementId**=bitbucket
-  - Used to extract correct values from json webhook payload
-- **jobId**=my_awessome_jenkins_job
-  - Used to determinate the specific job to be launched in jenkins
-- **notificationUsers**
-  -  This is an extra parameter , which will be sent to your **my_awessome_jenkins_job** jenkins job
+  `
+http://my_jenkins.com/easy-webhook-plugin-123456789/?scmId=gitlab&jobId=hello_word_job&notificationUsers=jane.doe@blindspot.com
+  `
 
 Finally, just push some change and go to your Jenkins to see the new build in progress :D   
 
-# Get hacks from 
+# Get hacks from
 
 - https://github.com/jayway/JsonPath
 - https://github.com/jenkinsci/build-with-parameters-plugin/blob/master/src/main/java/org/jenkinsci/plugins/buildwithparameters/BuildWithParametersAction.java
@@ -109,6 +115,7 @@ Finally, just push some change and go to your Jenkins to see the new build in pr
 - Unit Tests
 - Gitalb json path expressions
 - Add to Jenkins official site
+- Install from available plugins in Jenkins configurations (coming soon)
 
 # Contributors
 
@@ -124,8 +131,3 @@ Thanks goes to these wonderful people :
     </td>    
   </tbody>
 </table>
-
-
-
-
-

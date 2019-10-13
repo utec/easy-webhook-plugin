@@ -34,7 +34,7 @@ public class SystemPluginConfiguration extends NodeProperty<Node> {
     }
 
     if (property == null) {
-      throw new Exception("Failed to get plugin configurations from system page: "
+      throw new Exception("Failed to get Easy WebHook Plugin configurations from : "
               + "Jenkins > Manage Jenkins > Configure System > Configure Easy WebHook Plugin."
               + "Is your Easy WebHook Plugin configurated? Add the Easy Webhook Key or uninstall this plugin if it is unused.");
     }

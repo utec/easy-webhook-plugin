@@ -1,0 +1,61 @@
+{
+  "object_kind": "push",
+  "event_name": "push",
+  "before": "ecb9ff44aa0",
+  "after": "fa61658291900e59df0",
+  "ref": "refs/heads/lassie_branch",
+  "checkout_sha": "fa61658291900e59df0",
+  "message": null,
+  "user_id": 220253,
+  "user_name": "JRichardsz",
+  "user_username": "Richardsz",
+  "user_email": "",
+  "user_avatar": "https://assets.gitlab-static.net/uploads/-/system/user/avatar/220253/agente3.png",
+  "project_id": 14796876,
+  "project": {
+    "id": 14796876,
+    "name": "gitlab_repository",
+    "description": "",
+    "web_url": "https://gitlab.com/Richardsz/gitlab_repository",
+    "avatar_url": null,
+    "git_ssh_url": "git@gitlab.com:Richardsz/gitlab_repository.git",
+    "git_http_url": "https://gitlab.com/Richardsz/gitlab_repository.git",
+    "namespace": "JRichardsz",
+    "visibility_level": 20,
+    "path_with_namespace": "Richardsz/gitlab_repository",
+    "default_branch": "master",
+    "ci_config_path": null,
+    "homepage": "https://gitlab.com/Richardsz/gitlab_repository",
+    "url": "git@gitlab.com:Richardsz/gitlab_repository.git",
+    "ssh_url": "git@gitlab.com:Richardsz/gitlab_repository.git",
+    "http_url": "https://gitlab.com/Richardsz/gitlab_repository.git"
+  },
+  "commits": [
+    {
+      "id": "fa61658291900e59df0",
+      "message": "Update README.md",
+      "timestamp": "2019-10-13T16:44:05Z",
+      "url": "https://gitlab.com/Richardsz/gitlab_repository/commit/fa61658291900e59df0",
+      "author": {
+        "name": "JRichardsz",
+        "email": "jrichardsz.java@gmail.com"
+      },
+      "added": [],
+      "modified": [
+        "README.md"
+      ],
+      "removed": []
+    }
+  ],
+  "total_commits_count": 1,
+  "push_options": {},
+  "repository": {
+    "name": "gitlab_repository",
+    "url": "git@gitlab.com:Richardsz/gitlab_repository.git",
+    "description": "",
+    "homepage": "https://gitlab.com/Richardsz/gitlab_repository",
+    "git_http_url": "https://gitlab.com/Richardsz/gitlab_repository.git",
+    "git_ssh_url": "git@gitlab.com:Richardsz/gitlab_repository.git",
+    "visibility_level": 20
+  }
+}
