@@ -11,8 +11,8 @@
 
 	<tr>
 		<td colspan="5" style="padding-left: 50px;">
-			<f:entry title="Json path expressions for others git providers" field="customGitProviderWebhookJsonParameters">
-		        <f:textarea />
+			<f:entry title="Inject all the webhook payload?" field="injectAllWebhookPayload">
+		        <f:checkbox />
 		    </f:entry>
 		</td>
 	</tr>	

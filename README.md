@@ -16,7 +16,7 @@ When a event is triggered in your git repository manager (bitbucket, github, git
   - gitCloneUrlHttpsPrefix
   - gitCloneUrlSshPrefix
 
-- http uri parameters
+- http query parameters
   - scmId
   - jobId
   - any other uri parameters sent to webhook (http://jenkins.com/easy-webhook-plugin-mykey/var1=value1&var=value2...)
@@ -73,7 +73,7 @@ These values are required
 | scmId      | one of the well known scm | gitlab, bitbucket or github(coming soon)
 | jobId      | name of any existent jenkins job | hello_word_job
 
-With the previous values, you can exec this line:
+With the previous values, you can exec this:
 
 ```
 curl -d @/tmp/gitlab_webhook.json \
@@ -113,7 +113,7 @@ Finally, just push some change and go to your Jenkins to see the new build in pr
 # Coming soon
 
 - Unit Tests
-- Gitalb json path expressions
+- github json path expressions
 - Add to Jenkins official site
 - Install from available plugins in Jenkins configurations (coming soon)
 

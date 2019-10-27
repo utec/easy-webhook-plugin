@@ -10,14 +10,14 @@ import jenkins.model.Jenkins;
 
 public class SystemPluginConfiguration extends NodeProperty<Node> {
 
-  private String customGitProviderWebhookJsonParameters;
+  private boolean injectAllWebhookPayload;
   private String easyWebHookKey;
 
   @DataBoundConstructor
-  public SystemPluginConfiguration(String customGitProviderWebhookJsonParameters,
+  public SystemPluginConfiguration(boolean injectAllWebhookPayload,
           String easyWebHookKey) {
 
-    this.customGitProviderWebhookJsonParameters = customGitProviderWebhookJsonParameters;
+    this.injectAllWebhookPayload = injectAllWebhookPayload;
     this.easyWebHookKey = easyWebHookKey;
   }
 
@@ -55,13 +55,12 @@ public class SystemPluginConfiguration extends NodeProperty<Node> {
     }
   }
 
-  public String getCustomGitProviderWebhookJsonParameters() {
-    return customGitProviderWebhookJsonParameters;
+  public boolean isInjectAllWebhookPayload() {
+    return injectAllWebhookPayload;
   }
 
-  public void setCustomGitProviderWebhookJsonParameters(
-          String customGitProviderWebhookJsonParameters) {
-    this.customGitProviderWebhookJsonParameters = customGitProviderWebhookJsonParameters;
+  public void setInjectAllWebhookPayload(boolean injectAllWebhookPayload) {
+    this.injectAllWebhookPayload = injectAllWebhookPayload;
   }
 
   public String getEasyWebHookKey() {
