@@ -39,7 +39,7 @@ public class EasyWebhookCrumbExclusion extends CrumbExclusion {
 
     String exclusionPath = null;
     try {
-      exclusionPath = "/" + Constants.UNPROTECTED_ROOT_ACTION_PREFIX + "_"
+      exclusionPath = "/" + Constants.UNPROTECTED_ROOT_ACTION_PREFIX + "-"
               + SystemPluginConfiguration.getCurrentProperties().getEasyWebHookKey();
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getMessage());

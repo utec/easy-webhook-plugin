@@ -19,9 +19,9 @@ import hudson.model.Job;
 import hudson.model.ParametersAction;
 
 public class WebhookExecutor {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(WebHookReceiver.class.getName());
-	
+
 	private ScmWebHookJsonParser scmWebHookJsonParser = new ScmWebHookJsonParser();
 
 	public void execute(StaplerRequest req, StaplerResponse resp) throws Exception {
@@ -57,7 +57,7 @@ public class WebhookExecutor {
 
 		LOGGER.log(Level.INFO, "Extracting common parameters from "+"["+scmId+"] "+"webhook json");
 
-		Map<String, String> parametersFromJsonWebhook = 
+		Map<String, String> parametersFromJsonWebhook =
 				scmWebHookJsonParser.getCommonValues(scmId, webhookPayload);
 
 		for (Entry<String, String> entry : parametersFromJsonWebhook.entrySet()) {
@@ -86,6 +86,10 @@ public class WebhookExecutor {
 
 		parametersToSendItToJob.put("gitCloneUrlHttpsPrefix", gitCloneUrlHttpsPrefix);
 		parametersToSendItToJob.put("gitCloneUrlSshPrefix", gitCloneUrlSshPrefix);
+
+		if(SystemPluginConfiguration.getCurrentProperties().isInjectAllWebhookPayload()) {
+		  parametersToSendItToJob.put("webhookPayload", webhookPayload);
+		}
 
 		ParametersAction parametersAction = JenkinsUtil.simpleMapToParametersAction(parametersToSendItToJob);
 
